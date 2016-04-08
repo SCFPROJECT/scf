@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qinghuo.bdpl.core.dao.ProcessMapper">
-	<select id="selectProcdef" resultType="com.qinghuo.bdpl.core.domain.Procdef" >
-		select * from act_re_procdef where version_ in (select max(version_) from act_re_procdef group by key_ )
-	</select>
-</mapper>
