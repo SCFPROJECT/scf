@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.qinghuo.bdpl.core.conditionbean.ParamUser;
-import com.qinghuo.bdpl.core.domain.User;
+import com.scf.core.conditionbean.ParamUser;
+import com.scf.core.domain.User;
+import com.scf.core.service.UserService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={ "classpath:spring.xml", "classpath:spring-mybatis.xml" })
 public class UserServiceTest {
