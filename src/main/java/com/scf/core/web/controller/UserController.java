@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.activiti.engine.ProcessEngine;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +18,6 @@ public class UserController {
 
 	@Resource
 	private UserService userService;
-	ProcessEngine processEngine;
 
 	@RequestMapping("/tolist")
 	public ModelAndView tolist() throws Exception {
