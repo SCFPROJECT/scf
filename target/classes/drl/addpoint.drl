@@ -1,0 +1,74 @@
+/*
+ * Copyright 2010 JBoss Inc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package org.drools.demo.point
+
+import com.qinghuo.bdpl.core.test.domain.PointDomain;
+
+rule "birthdayPoint"
+	 salience 100  
+	 lock-on-active true  
+	 when
+	 	$pointDomain : PointDomain(birthDay == true)
+	 then
+	 	$pointDomain.setPoint($pointDomain.getPoint()+10);  
+	 	$pointDomain.setBuyNums($pointDomain.getBuyNums()*2);  	  
+	  	$pointDomain.setBuyMoney($pointDomain.getBuyMoney()*2);  
+		$pointDomain.setBillThisMonth($pointDomain.getBillThisMonth()*2);
+		$pointDomain.recordPointLog($pointDomain.getUserName(),"birthdayPoint");  
+end
+
+rule "billThisMonthPoint"
+	 salience 99
+	 lock-on-active true
+	 date-effective "2015-08-10 12:00:00"
+	 date-expires "2015-08-15 12:00:00"
+	 when
+	 	$pointDomain: PointDomain(billThisMonth >= 3)
+	 then
+	 	$pointDomain.setPoint($pointDomain.getPoint()+$pointDomain.getBillThisMonth()/3*30);  
+	 	$pointDomain.recordPointLog($pointDomain.getUserName(),"billThisMonthPoint");  
+end
+
+rule "buyMoneyPoint"
+	salience 98
+	lock-on-active true
+	when
+		$pointDomain:PointDomain(buyMoney >= 100)
+	then
+		$pointDomain.setPoint($pointDomain.getPoint()+ (int)$pointDomain.getBuyMoney()/100 * 10);  
+		$pointDomain.recordPointLog($pointDomain.getUserName(),"buyMoneyPoint");  
+end
+
+rule "buyNumPoint"
+	salience 97
+	lock-on-active true
+	when
+		$pointDomain:PointDomain(buyNums >= 5)
+	then
+		$pointDomain.setPoint($pointDomain.getPoint()+$pointDomain.getBuyNums()/5 * 50);  
+		$pointDomain.recordPointLog($pointDomain.getUserName(),"buyNumsPoint");  
+end
+
+rule "allFitPoint"
+	salience 96
+	lock-on-active true
+	when
+		$pointDomain:PointDomain(buyNums >= 5 && billThisMonth >= 3 && buyMoney >= 100)
+	then
+		$pointDomain.setPoint($pointDomain.getPoint()+ 100);  
+		$pointDomain.recordPointLog($pointDomain.getUserName(),"allFitPoint");  
+end		
